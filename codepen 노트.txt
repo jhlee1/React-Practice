@@ -1,0 +1,108 @@
+class Codelab extends React.Component {
+
+  render() {
+    // let text = "Hello world";
+    // let style = {
+    //   backgroundColor:'aqua'
+    // };
+
+    return(
+      // <div style={style}>{text}</div>
+      <div>
+        <h1>Hello {this.props.name}</h1>
+        <h2>Hello {this.props.number}</h2>
+        <div>{this.props.children}</div>
+      </div>
+    );
+  }
+}
+
+Codelab.propTypes = {
+  name: React.PropTypes.string,
+  number: React.PropTypes.number.isRequired
+}
+
+Codelab.defaultProps= {
+  name:"Unknown"
+};
+
+class Counter extends React.Component {
+  constructor(props) {
+    super(props); //super를 사용해야 이 속의 setter와 this.state = 를 사용할 수 있음
+    this.state = {
+      value:0
+    };
+    this.handleClick = this.handleClick.bind(this); // javascript에서는 어떤 객체를 사용할지 모르기 때문에 binding이 필요함
+  }
+
+ handleClick() {
+   this.setState({
+     value: this.state.value + 1
+   });
+   /*
+    안좋은 예
+    this.state.value = this.state.value + 1;
+    this.forceUpdate();
+   */
+ }
+
+  render() {
+    return(
+      <div>
+        <h2>{this.state.value}</h2>
+        <button onClick={this.handleClick}>Press Me</button> {/* this.handleClick()으로 사용하면 rendering을 할 때마다 함수를 부르기 때문에 rendering->setState -> rendering -> setState 무한 반복*/}
+      </div>
+    )
+  }
+}
+
+class ContactInfo extends React.Component {
+  render() {
+    return (
+    <div>
+        {this.props.contact.name}
+        {this.props.contact.phone}
+    </div>
+    )
+  }
+}
+
+
+class Contact extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      contactData: [
+        {name:'Abet', phone:'010-0000-0001'},
+        {name:'Betty', phone:'010-0000-0002'},
+        {name:'Charlie', phone:'010-0000-0003'},
+        {name:'David', phone:'010-0000-0004'},
+      ]
+    }
+  }
+  render() {
+
+    const mapToComponent = (data) => {
+      return data.map((contact, i) => {
+        return (<ContactInfo contact={contact} key ={i}/>);
+      });
+    };
+    return (
+    <div>
+        {mapToComponent(this.state.contactData)}
+    </div>
+    )
+  }
+}
+
+class App extends React.Component {
+  render() {
+    return (
+    // <Codelab name={this.props.name} number={this.props.number}>{this.props.children}</Codelab>
+      // <Counter/>
+      <Contact/>
+    );
+  }
+}
+
+ReactDOM.render(<App></App>, document.getElementById('root'));
