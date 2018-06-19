@@ -1,11 +1,24 @@
 import React from 'react';
+import Contact from './Contact';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      name:''
+    };
+  }
+
   render() {
     return (
-      <h1>Hello</h1>
+      <div>
+        <Contact/>
+      </div>
     );
   }
 }
 
 export default App;
+
+// <button onClick={()=>{this.setState({name:'Hot loader'});}}>Click it!</button>
+// <h1>Hello!! {this.state.name}</h1>
